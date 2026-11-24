@@ -1,0 +1,61 @@
+﻿@model Clinic_Appointment_System.Models.Appointment
+@{
+    ViewData["Title"] = "Randevunu redaktə et";
+}
+
+<div class="container mt-4">
+    <h2>Randevunu redaktə et</h2>
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="PatientName" class="form-label">Pasiyentin adı və soyadı</label>
+            <input asp-for="PatientName" class="form-control" />
+            <span asp-validation-for="PatientName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Phone" class="form-label">Əlaqə nömrəsi</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Department" class="form-label">Şöbə</label>
+            <select asp-for="Department" class="form-select">
+                <option value="Terapiya">Terapiya</option>
+                <option value="Stomatologiya">Stomatologiya</option>
+                <option value="Kardiologiya">Kardiologiya</option>
+                <option value="Oftalmologiya">Oftalmologiya</option>
+                <option value="Nevrologiya">Nevrologiya</option>
+            </select>
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="AppointmentDate" class="form-label">Qəbul tarixi və saatı</label>
+            <input asp-for="AppointmentDate" type="datetime-local" class="form-control" />
+            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Notes" class="form-label">Şikayət / Qeyd</label>
+            <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label">Status</label>
+            <select asp-for="Status" class="form-select">
+                <option value="Gözləmədə">Gözləmədə</option>
+                <option value="Təsdiqlənib">Təsdiqlənib</option>
+                <option value="Tamamlanıb">Tamamlanıb</option>
+                <option value="Ləğv edilib">Ləğv edilib</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Yadda saxla</button>
+        <a asp-action="Index" class="btn btn-secondary">Geri</a>
+    </form>
+</div>

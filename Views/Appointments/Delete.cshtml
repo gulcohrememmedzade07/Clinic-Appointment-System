@@ -1,0 +1,21 @@
+﻿@model Clinic_Appointment_System.Models.Appointment
+@{
+    ViewData["Title"] = "Randevunu sil";
+}
+
+<div class="container mt-4">
+    <h2>Randevunu silmək</h2>
+
+    <div class="alert alert-warning">
+        Bu randevunu silmək istədiyinizə əminsiniz?
+    </div>
+
+    <h4>@Model.PatientName — @Model.Department</h4>
+    <p><strong>Tarix:</strong> @Model.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</p>
+    <p><strong>Şikayət:</strong> @Model.Notes</p>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <button type="submit" class="btn btn-danger">Bəli, sil</button>
+        <a asp-action="Index" class="btn btn-secondary">Xeyr</a>
+    </form>
+</div>

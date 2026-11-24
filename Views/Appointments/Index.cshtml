@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Clinic_Appointment_System.Models.Appointment>
+@{
+    ViewData["Title"] = "Randevular";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+        <h2 class="fw-bold mb-1">Həkim Randevuları</h2>
+        <p class="text-muted mb-0">Qeydiyyatdan keçmiş bütün pasiyent müraciətlərinin siyahısı</p>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <div class="bg-white border rounded-3 px-3 py-2 shadow-sm">
+            <span class="text-muted small">Ümumi randevu:</span>
+            <strong class="fs-5 text-primary ms-1">@ViewBag.TotalCount</strong>
+        </div>
+        <a asp-action="Create" class="btn btn-primary px-4 py-2">
+            <i class="bi bi-plus-lg me-1"></i> Yeni randevu
+        </a>
+    </div>
+</div>
+
+<div class="table-card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>#ID</th>
+                    <th>Pasiyent</th>
+                    <th>Şöbə</th>
+                    <th>Telefon</th>
+                    <th>Qəbul Tarixi</th>
+                    <th>Status</th>
+                    <th class="text-end">Əməliyyatlar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold text-muted">#@item.Id</td>
+                        <td class="fw-bold">@item.PatientName</td>
+                        <td>
+                            <span class="badge bg-light text-dark border px-2 py-1">
+                                <i class="bi bi-hospital me-1 text-primary"></i>@item.Department
+                            </span>
+                        </td>
+                        <td><i class="bi bi-telephone me-1 text-muted"></i>@item.Phone</td>
+                        <td><i class="bi bi-calendar-event me-1 text-muted"></i>@item.AppointmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            @if (item.Status == "Gözləmədə")
+                            {
+                                <span class="badge rounded-pill bg-warning text-dark px-3 py-2">Gözləmədə</span>
+                            }
+                            else if (item.Status == "Təsdiqlənib")
+                            {
+                                <span class="badge rounded-pill bg-success px-3 py-2">Təsdiqlənib</span>
+                            }
+                            else if (item.Status == "Tamamlanıb")
+                            {
+                                <span class="badge rounded-pill bg-info text-dark px-3 py-2">Tamamlanıb</span>
+                            }
+                            else
+                            {
+                                <span class="badge rounded-pill bg-danger px-3 py-2">@item.Status</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-sm" title="Ətraflı">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm" title="Redaktə">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" title="Sil">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-x text-muted" style="font-size: 3rem;"></i>
+            <p class="text-muted mt-2 mb-3">Hələ heç bir randevu yaradılmayıb.</p>
+            <a asp-action="Create" class="btn btn-primary btn-sm">İlk randevunu yarat</a>
+        </div>
+    }
+</div>
